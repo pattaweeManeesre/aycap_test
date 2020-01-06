@@ -3,8 +3,9 @@ package com.test.aycap.service;
 import com.test.aycap.api.model.RegisterRequest;
 import com.test.aycap.entiry.MemberType;
 import com.test.aycap.entiry.MobileMember;
+import com.test.aycap.exception.BaseException;
+import com.test.aycap.exception.ErrorCode;
 import com.test.aycap.repository.MemberRepository;
-import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class MemberServiceImpl implements MemberService {
     MemberRepository memberRepository;
 
     @Override
-    public MobileMember save(RegisterRequest registerRequest) {
+    public MobileMember save(RegisterRequest registerRequest) throws BaseException {
 
         MobileMember mobileMember = new MobileMember();
         mobileMember.setMobileNo(registerRequest.getMobileNo());
@@ -43,10 +44,9 @@ public class MemberServiceImpl implements MemberService {
         return list;
     }
 
-    private MemberType findMemberType(Double salary){
-        if(salary < 15000){
-            //TODO handle exception
-            return null;
+    private MemberType findMemberType(Double salary) throws BaseException {
+        if(salary == null || salary < 15000){
+            throw new BaseException(new ErrorCode("0001","salary lower than 15000"));
         }else if(salary < 30000){
             return MemberType.Silver;
         }else if(salary < 50000){
@@ -56,10 +56,9 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
-    private String generateReferenceCode(String mobileNo){
-        if(mobileNo.length() != 10){
-            //TODO handle exception
-            return null;
+    private String generateReferenceCode(String mobileNo) throws BaseException {
+        if(mobileNo == null || mobileNo.length() != 10){
+            throw new BaseException(new ErrorCode("0002","mobile number incorrect"));
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYYMMDD");
         return simpleDateFormat.format(new Date()) + mobileNo.substring(6);

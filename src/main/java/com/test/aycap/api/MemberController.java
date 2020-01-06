@@ -2,6 +2,7 @@ package com.test.aycap.api;
 
 import com.test.aycap.api.model.RegisterRequest;
 import com.test.aycap.entiry.MobileMember;
+import com.test.aycap.exception.BaseException;
 import com.test.aycap.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class MemberController {
     }
 
     @PostMapping(value = "/register")
-    public MobileMember register(@RequestBody RegisterRequest registerRequest){
+    public MobileMember register(@RequestBody RegisterRequest registerRequest) throws BaseException {
         LOG.info("registerRequest : {}",registerRequest);
         return memberService.save(registerRequest);
     }
