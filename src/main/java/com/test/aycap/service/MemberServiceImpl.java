@@ -28,6 +28,9 @@ public class MemberServiceImpl implements MemberService {
         mobileMember.setSalary(registerRequest.getSalary());
         mobileMember.setReferenceCode(this.generateReferenceCode(registerRequest.getMobileNo()));
         mobileMember.setMemberType(this.findMemberType(registerRequest.getSalary()));
+        mobileMember.setUsername(registerRequest.getUsername());
+        mobileMember.setAddress(registerRequest.getAddress());
+        mobileMember.setPassword(registerRequest.getPassword());
 
         return memberRepository.save(mobileMember);
     }
