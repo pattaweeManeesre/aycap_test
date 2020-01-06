@@ -21,4 +21,7 @@ public class MobileMember {
     @Enumerated(EnumType.STRING)
     @Column
     private MemberType memberType;
+
+    @Column
+    private Double salary;
 }
