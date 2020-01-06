@@ -20,7 +20,7 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-    @GetMapping(value = "/getAllUser")
+    @GetMapping(value = {"/","/getAllUser"})
     public List<MobileMember> getAllUser(){
         return memberService.findAllMobileMember();
     }
